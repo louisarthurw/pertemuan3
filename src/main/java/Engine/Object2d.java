@@ -107,7 +107,7 @@ public class Object2d extends ShaderProgram {
     public void drawLine() {
         drawSetup();
         // Draw the vertices
-        glLineWidth(5);
+        glLineWidth(1);
         glPointSize(0);
         glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
     }

@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glClearColor;
@@ -23,6 +24,7 @@ public class Main {
     ArrayList<Circle> objectsRectangle2 = new ArrayList<>();
 
     ArrayList<Object2d> objectsCurve = new ArrayList<>();
+    ArrayList<Object2d> objectsSphere = new ArrayList<>();
 
     boolean overlap;
     boolean isTouched;
@@ -49,7 +51,6 @@ public class Main {
 //                                new Vector3f(0.5f, -0.5f, 0.0f)
 //                        )
 //                ), new Vector4f(0.0f, 1.0f, 1.0f, 1.0f)
-//
 //        ));
 
 //        objects.add(new Object2d(
@@ -405,6 +406,21 @@ public class Main {
                 new ArrayList<>(),
                 new Vector4f(0.0f, 1.0f, 1.0f, 1.0f)
         ));
+
+        objectsSphere.add(new Sphere(
+                Arrays.asList(
+                        //shaderFile lokasi menyesuaikan objectnya
+                        new ShaderProgram.ShaderModuleData
+                                ("resources/shaders/scene.vert"
+                                        , GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData
+                                ("resources/shaders/scene.frag"
+                                        , GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(0.0f, 1.0f, 1.0f, 1.0f),
+                0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f
+        ));
     }
 
     public void input() {
@@ -494,6 +510,10 @@ public class Main {
             }
 
             for (Circle object : objectsRectangle2) {
+                object.draw();
+            }
+
+            for (Object2d object : objectsSphere) {
                 object.draw();
             }
 
