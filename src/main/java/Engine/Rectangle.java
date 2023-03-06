@@ -17,9 +17,7 @@ public class Rectangle extends Object2d {
         this.index = index;
         ibo = glGenBuffers();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                Utils.listoInt(index),
-                GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, Utils.listoInt(index), GL_STATIC_DRAW);
     }
 
     public void draw() {

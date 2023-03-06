@@ -45,9 +45,7 @@ public class Object2d extends ShaderProgram {
         //set vbo
         vbo = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER,
-                Utils.listoFloat(vertices),
-                GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, Utils.listoFloat(vertices), GL_STATIC_DRAW);
     }
 
     public void setupVAOVBOWithVerticesColor() {
@@ -58,16 +56,12 @@ public class Object2d extends ShaderProgram {
         //set vbo
         vbo = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER,
-                Utils.listoFloat(vertices),
-                GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, Utils.listoFloat(vertices), GL_STATIC_DRAW);
 
         //set vboColor
         vboColor = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboColor);
-        glBufferData(GL_ARRAY_BUFFER,
-                Utils.listoFloat(verticesColor),
-                GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, Utils.listoFloat(verticesColor), GL_STATIC_DRAW);
     }
 
     public void drawSetup() {
@@ -77,10 +71,7 @@ public class Object2d extends ShaderProgram {
         // Bind VBO
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glVertexAttribPointer(0, 3,
-                GL_FLOAT,
-                false,
-                0, 0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
     }
 
     public void drawSetupWithVerticesColor() {
@@ -89,18 +80,12 @@ public class Object2d extends ShaderProgram {
         // Bind VBO
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glVertexAttribPointer(0, 3,
-                GL_FLOAT,
-                false,
-                0, 0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
         // Bind VBOColor
         glEnableVertexAttribArray(1);
         glBindBuffer(GL_ARRAY_BUFFER, vboColor);
-        glVertexAttribPointer(1, 3,
-                GL_FLOAT,
-                false,
-                0, 0);
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
     }
 
     public void draw() {
@@ -108,9 +93,7 @@ public class Object2d extends ShaderProgram {
         // Draw the vertices
         glLineWidth(1);
         glPointSize(0);
-        glDrawArrays(GL_TRIANGLES,
-                0,
-                vertices.size());
+        glDrawArrays(GL_TRIANGLES, 0, vertices.size());
     }
 
     public void drawWithVerticesColor() {
@@ -118,8 +101,24 @@ public class Object2d extends ShaderProgram {
         // Draw the vertices
         glLineWidth(1);
         glPointSize(0);
-        glDrawArrays(GL_TRIANGLES,
-                0,
-                vertices.size());
+        glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+    }
+
+    public void drawLine() {
+        drawSetup();
+        // Draw the vertices
+        glLineWidth(5);
+        glPointSize(0);
+        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+    }
+
+    public void addVertices(Vector3f newVector) {
+        vertices.add(newVector);
+        setupVAOVBO();
+    }
+
+    public void update(int index, Vector3f newVector) {
+        vertices.set(index, newVector);
+        setupVAOVBO();
     }
 }
