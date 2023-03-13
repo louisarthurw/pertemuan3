@@ -27,7 +27,7 @@ public class Sphere extends Circle {
         super(shaderModuleDataList, vertices, color, centerX, centerY, radiusX, radiusY);
         this.centerZ = centerZ;
         this.radiusZ = radiusZ;
-//        createSphere();
+        createSphere();
 //        createEllipsoid();
 //        createHyperboloid_1_Side();
 //        createHyperboloid_2_Side();
@@ -306,5 +306,22 @@ public class Sphere extends Circle {
         //Bind IBO & draw
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
         glDrawElements(GL_LINE_STRIP, index.size(), GL_UNSIGNED_INT, 0);
+    }
+
+    @Override
+    public float getCenterX() {
+        return super.getCenterX();
+    }
+
+    @Override
+    public float getCenterY() {
+        return super.getCenterY();
+    }
+
+    public float getCenterZ() {
+        return centerZ;
+    }
+    public void setCenterZ(float centerZ) {
+        this.centerZ = centerZ;
     }
 }
