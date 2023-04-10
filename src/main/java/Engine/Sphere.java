@@ -27,7 +27,8 @@ public class Sphere extends Circle {
         super(shaderModuleDataList, vertices, color, centerX, centerY, radiusX, radiusY);
         this.centerZ = centerZ;
         this.radiusZ = radiusZ;
-        createSphere();
+//        createSphere();
+        createBox();
 //        createEllipsoid();
 //        createHyperboloid_1_Side();
 //        createHyperboloid_2_Side();

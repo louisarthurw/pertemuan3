@@ -76,15 +76,15 @@ public class Circle extends Object2d {
         }
     }
 
-    public void draw() {
-        drawSetup();
-        //Bind IBO & draw
-        glLineWidth(1);
-        glPointSize(0);
-//        glDrawArrays(GL_LINES, 0, vertices.size());
-        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
-//        glDrawArrays(GL_POLYGON, 0, vertices.size());
-    }
+//    public void draw() {
+//        drawSetup();
+//        //Bind IBO & draw
+//        glLineWidth(1);
+//        glPointSize(0);
+////        glDrawArrays(GL_LINES, 0, vertices.size());
+//        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
+////        glDrawArrays(GL_POLYGON, 0, vertices.size());
+//    }
 
     public float getCenterX() {
         return centerX;
