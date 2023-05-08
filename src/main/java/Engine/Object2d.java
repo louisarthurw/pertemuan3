@@ -134,7 +134,7 @@ public class Object2d extends ShaderProgram {
         // Draw the vertices
         glLineWidth(1);
         glPointSize(0);
-        glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+        glDrawArrays(GL_LINE_STRIP, 0, vertices.size());
         for(Object2d child : childObject) {
             child.draw(camera, projection);
         }
