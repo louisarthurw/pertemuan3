@@ -36,6 +36,7 @@ public class Main {
     public void init() {
         window.init();
         GL.createCapabilities();
+//        camera.setPosition(0, 0, 0.5f);
         camera.setPosition(0, 0, 0.5f);
         camera.setRotation((float) Math.toRadians(0.0f), (float) Math.toRadians(30.0f));
 
@@ -482,6 +483,25 @@ public class Main {
         objectsSphere.get(0).getChildObject().get(1).getChildObject().get(0).scaleObject(0.5f, 0.5f, 0.5f);
         objectsSphere.get(0).getChildObject().get(1).getChildObject().get(0).translateObject(0.5f, -0.2f, 0.0f);
 
+        // object merah sebagai tumpuan
+        objectsSphere.add(new Sphere(
+                Arrays.asList(
+                        //shaderFile lokasi menyesuaikan objectnya
+                        new ShaderProgram.ShaderModuleData
+                                ("resources/shaders/scene.vert"
+                                        , GL_VERTEX_SHADER),
+                        new ShaderProgram.ShaderModuleData
+                                ("resources/shaders/scene.frag"
+                                        , GL_FRAGMENT_SHADER)
+                ),
+                new ArrayList<>(),
+                new Vector4f(1.0f, 0, 0, 0),
+                0.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f
+        ));
+        objectsSphere.get(1).scaleObject(0.2f, 0.2f, 0.2f);
+//        objectsSphere.get(1).translateObject(0.0f, 0.0f, 0.5f);
+        objectsSphere.get(1).translateObject(0.75f, 0.0f, 0.0f);
+
 //        // merkurius
 //        objectsSphere.add(new Sphere(
 //                Arrays.asList(
@@ -593,6 +613,14 @@ public class Main {
             camera.moveLeft(move);
         }
 
+        if (window.isKeyPressed(GLFW_KEY_I)) {
+            camera.moveForward(move);
+        }
+
+        if (window.isKeyPressed(GLFW_KEY_J)) {
+            camera.moveBackwards(move);
+        }
+
         if (window.getMouseInput().isLeftButtonPressed()) {
             Vector2f displayVector = window.getMouseInput().getDisplVec();
             camera.addRotation((float) Math.toRadians(displayVector.x * 0.1f), (float) Math.toRadians(displayVector.y * 0.1f));
@@ -613,16 +641,52 @@ public class Main {
 
         if (window.isKeyPressed(GLFW_KEY_1)) {
             muter = true;
-            camera.addRotation(0.0f, (float) Math.toRadians(0.5f));
         }
 
         if (muter) {
             waktuMuter += 0.01f;
+            camera.addRotation(0.0f, (float) Math.toRadians(0.5f));
         }
 
-        if (waktuMuter >= 7.0f) {
+        if (waktuMuter >= 7.2f) {
             muter = false;
             waktuMuter = 0.0f;
+        }
+
+        // kamera gerak ke kanan, fokus ke object warna kuning
+        if (window.isKeyPressed(GLFW_KEY_2)) {
+            objectsSphere.get(0).translateObject(0.01f, 0.0f, 0.0f);
+            camera.setPosition(camera.getPosition().x + 0.01f, camera.getPosition().y, camera.getPosition().z);
+        }
+
+        // kamera gerak ke kiri, fokus ke object warna kuning
+        if (window.isKeyPressed(GLFW_KEY_3)) {
+            objectsSphere.get(0).translateObject(-0.01f, 0.0f, 0.0f);
+            camera.setPosition(camera.getPosition().x - 0.01f, camera.getPosition().y, camera.getPosition().z);
+        }
+
+        // kamera maju, fokus ke object warna kuning
+        if (window.isKeyPressed(GLFW_KEY_4)) {
+            objectsSphere.get(0).translateObject(0.0f, 0.0f, 0.01f);
+            camera.setPosition(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z + 0.01f);
+        }
+
+        // kamera mundur, fokus ke object warna kuning
+        if (window.isKeyPressed(GLFW_KEY_5)) {
+            objectsSphere.get(0).translateObject(0.0f, 0.0f, -0.01f);
+            camera.setPosition(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z - 0.01f);
+        }
+
+        if (window.isKeyPressed(GLFW_KEY_6)) {
+//            Vector3f target = objectsSphere.get(0).updateCenterPoint();
+            Vector3f target = objectsSphere.get(0).getChildObject().get(0).updateCenterPoint();
+            Vector3f sub = new Vector3f(camera.getPosition().x - target.x, camera.getPosition().y - target.y, camera.getPosition().z - target.z);
+
+            camera.addRotation(0f, (float) Math.toRadians(-0.5f));
+            float xnow = (float) ((sub.x * Math.cos(Math.toRadians(0.5f))) + (sub.z * Math.sin(Math.toRadians(0.5f))));
+            float ynow = sub.y;
+            float znow = (float) ((-sub.x * Math.sin(Math.toRadians(0.5f))) + (sub.z * Math.cos(Math.toRadians(0.5f))));
+            camera.setPosition(xnow + target.x, ynow + target.y, znow + target.z);
         }
 
 //        if (window.isKeyPressed(GLFW_KEY_W)) {
@@ -724,7 +788,6 @@ public class Main {
 //            }
 //        }
     }
-
     public void loop() {
         while (window.isOpen()) {
             window.update();
@@ -764,10 +827,6 @@ public class Main {
 
             for (Sphere object : objectsSphere) {
                 object.draw(camera, projection);
-            }
-
-            if (muter) {
-                camera.addRotation(0.0f, (float) Math.toRadians(0.5f));
             }
 
             // Restore state
